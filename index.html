@@ -3,42 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ucapan Ultah 🎉</title>
+    <title>Ucapan Ulang Tahun</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(120deg, #f6d365, #fda085);
-        color: #fff;
-      }
-      #countdown-container {
         text-align: center;
-      }
-      #countdown {
-        font-size: 3em;
-        font-weight: bold;
-        margin-bottom: 20px;
-      }
-      #countdown-message {
-        font-size: 1.5em;
-      }
-      #main-content {
-        display: none; /* Sembunyikan halaman utama awalnya */
-        text-align: center;
-        width: 100%;
-        height: 100vh;
+        padding: 20px;
         background: linear-gradient(120deg, #f6d365, #fda085);
         background-image: url("IMG_20231028_101239.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         color: #000;
+        height: 100vh;
+        margin: 0;
+      }
+      .countdown-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .countdown {
+        font-size: 2em;
+        font-weight: bold;
+        background: rgba(255, 255, 255, 0.8);
         padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       }
       .card {
         width: 300px;
@@ -61,86 +53,141 @@
       .message {
         font-size: 1.5em;
         font-weight: bold;
+        text-align: center;
       }
       .subtext {
         font-size: 1em;
         color: #666;
       }
+      #main-content {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <!-- Halaman Hitung Mundur -->
-    <div id="countdown-container">
-      <div id="countdown">00:00:00</div>
-      <div id="countdown-message">Menghitung mundur ke hari spesial...</div>
+    <!-- Countdown -->
+    <div id="countdown-container" class="countdown-container">
+      <div class="countdown" id="countdown">00:00:00</div>
     </div>
 
     <!-- Halaman Utama -->
     <div id="main-content">
-      <h1>Untuk Kiky 🎉</h1>
-      <p>Klik kartu for see ucapan:</p>
+      <h1>Selamat Ulang Tahun Kiky 🎉</h1>
+      <p style="text-transform: uppercase;">Klik kartu untuk melihat ucapan:</p>
       <div class="card" id="kartuUcapan" onclick="ubahUcapan()">
         <div class="message" id="pesanUtama">Selamat Ulang Tahun! 🎂</div>
-        <div class="subtext" id="pesanKecil">
-          Happy level up! Resky Widiyanti. S
-        </div>
+        <div class="subtext" id="pesanKecil">RESKY WIDIYANTI. S</div>
       </div>
     </div>
 
+    <!-- Audio -->
     <audio id="backsound" src="backs.mp3" loop></audio>
     <audio id="backsoundAkhir" src="in.mp3"></audio>
 
-    <script>
-      // Target waktu (contoh: 24 November 2024, pukul 00:00)
-      const targetDate = new Date("2024-11-23T20:50:00");
+     <script>
+      // Target waktu countdown
+      const targetDate = new Date("2024-11-23T00:00:00");
 
-      // Elemen HTML untuk countdown
+      // Elemen HTML
       const countdownEl = document.getElementById("countdown");
       const countdownContainer = document.getElementById("countdown-container");
       const mainContent = document.getElementById("main-content");
       const backsound = document.getElementById("backsound");
 
-      // Hitung mundur
+      // Fungsi untuk mengupdate countdown
       function updateCountdown() {
         const now = new Date();
         const difference = targetDate - now;
 
         if (difference <= 0) {
-          // Ketika waktu hitung mundur habis
-          countdownContainer.style.display = "none"; // Sembunyikan halaman hitung mundur
-          mainContent.style.display = "block"; // Tampilkan halaman utama
-          backsound.play(); // Putar musik utama
+          // Jika countdown selesai
+          countdownContainer.style.display = "none";
+          mainContent.style.display = "block";
+          backsound.play();
         } else {
           // Hitung waktu yang tersisa
-          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          const hours = Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (difference % (1000 * 60 * 60)) / (1000 * 60)
+          );
           const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-          // Update elemen countdown
-          countdownEl.textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+          countdownEl.textContent = `${String(hours).padStart(2, "0")}:${String(
+            minutes
+          ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
         }
       }
 
-      // Perbarui setiap detik
+      // Update countdown setiap detik
       setInterval(updateCountdown, 1000);
 
-      // Fungsi untuk mengganti ucapan (dari kode sebelumnya)
+      // Daftar ucapan
       const ucapan = [
-        { message: "Selamat Ulang Tahun! 🎂", subtext: "Semoga harimu menyenangkan!" },
-        { message: "Happy Birthday! 🎉", subtext: "Semoga semua impianmu menjadi kenyataan." },
-        // Tambahkan ucapan lainnya...
+        {
+          message: "Selamat Ulang Tahun! 🎂",
+          subtext: "Semoga harimu menyenangkan!",
+        },
+        {
+          message: "Happy Birthday! 🎉",
+          subtext: "Semoga semua impianmu menjadi kenyataan.",
+        },
+        {
+          message: "2024-11-24🎉",
+          subtext: "1995-11-24😊",
+        },
+        {
+          message: "Barakallah Fii Umrik! 🌟",
+          subtext: "Semoga selalu diberkahi.",
+        },
+        {
+          message: "Wishing You the Best! 🎈",
+          subtext:
+            "Hari ini adalah harimu yang dimana saya pernah berjanji hal istimewa sama kita",
+        },
+        {
+          message: "HBD! 🎁",
+          subtext: "Semoga sukses selalu menyertai!",
+        },
+        {
+          message: "Terimakasih untuk semua selama ini!😉",
+          subtext:
+            "Terima kasih banyak yahh atas semua kenangan, pengalaman pertama, firstime, dan momen-momen yang kita lewati bersama. Senang sekali bisa mengenalmu lebih dalam, meski akhirnya aku tahu bahwa aku hanya bagian kecil yang tidak diakui.",
+        },
+        {
+          message: "Semoga kamu bahagia ke depannya😉",
+          subtext: "03.10.23-03.10.24",
+        },
       ];
+
       let currentIndex = 0;
 
       function ubahUcapan() {
         const pesanUtama = document.getElementById("pesanUtama");
         const pesanKecil = document.getElementById("pesanKecil");
+        const backsoundAkhir = document.getElementById("backsoundAkhir");
+        const kartu = document.getElementById("kartuUcapan");
 
+        // Perbarui pesan
         currentIndex = (currentIndex + 1) % ucapan.length;
-
         pesanUtama.textContent = ucapan[currentIndex].message;
         pesanKecil.textContent = ucapan[currentIndex].subtext;
+
+        // Ganti warna latar belakang kartu
+        const randomHue = Math.floor(Math.random() * 360);
+        kartu.style.background = `hsl(${randomHue}, 80%, 90%)`;
+
+        // Atur audio
+        if (currentIndex >= ucapan.length - 2) {
+          backsound.pause();
+          backsoundAkhir.play();
+        } else {
+          backsoundAkhir.pause();
+          backsound.play();
+        }
       }
     </script>
+
   </body>
 </html>
