@@ -84,21 +84,22 @@
     <audio id="backsound" src="backs.mp3" loop></audio>
     <audio id="backsoundAkhir" src="in.mp3"></audio>
 
-     <script>
+    <script>
       // Target waktu countdown
-      const targetDate = new Date("2024-11-23T00:00:00");
-
+      const targetDate = new Date("2024-11-24T00:00:00");
+    
       // Elemen HTML
       const countdownEl = document.getElementById("countdown");
       const countdownContainer = document.getElementById("countdown-container");
       const mainContent = document.getElementById("main-content");
       const backsound = document.getElementById("backsound");
-
+      const backsoundAkhir = document.getElementById("backsoundAkhir");
+    
       // Fungsi untuk mengupdate countdown
       function updateCountdown() {
         const now = new Date();
         const difference = targetDate - now;
-
+    
         if (difference <= 0) {
           // Jika countdown selesai
           countdownContainer.style.display = "none";
@@ -106,88 +107,55 @@
           backsound.play();
         } else {
           // Hitung waktu yang tersisa
-          const hours = Math.floor(
-            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-          );
-          const minutes = Math.floor(
-            (difference % (1000 * 60 * 60)) / (1000 * 60)
-          );
+          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
+    
           countdownEl.textContent = `${String(hours).padStart(2, "0")}:${String(
             minutes
           ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
         }
       }
-
+    
       // Update countdown setiap detik
       setInterval(updateCountdown, 1000);
-
+    
       // Daftar ucapan
       const ucapan = [
-        {
-          message: "Selamat Ulang Tahun! 🎂",
-          subtext: "Semoga harimu menyenangkan!",
-        },
-        {
-          message: "Happy Birthday! 🎉",
-          subtext: "Semoga semua impianmu menjadi kenyataan.",
-        },
-        {
-          message: "2024-11-24🎉",
-          subtext: "1995-11-24😊",
-        },
-        {
-          message: "Barakallah Fii Umrik! 🌟",
-          subtext: "Semoga selalu diberkahi.",
-        },
-        {
-          message: "Wishing You the Best! 🎈",
-          subtext:
-            "Hari ini adalah harimu yang dimana saya pernah berjanji hal istimewa sama kita",
-        },
-        {
-          message: "HBD! 🎁",
-          subtext: "Semoga sukses selalu menyertai!",
-        },
-        {
-          message: "Terimakasih untuk semua selama ini!😉",
-          subtext:
-            "Terima kasih banyak yahh atas semua kenangan, pengalaman pertama, firstime, dan momen-momen yang kita lewati bersama. Senang sekali bisa mengenalmu lebih dalam, meski akhirnya aku tahu bahwa aku hanya bagian kecil yang tidak diakui.",
-        },
-        {
-          message: "Semoga kamu bahagia ke depannya😉",
-          subtext: "03.10.23-03.10.24",
-        },
+        { message: "Selamat Ulang Tahun! 🎂", subtext: "Semoga harimu menyenangkan!" },
+        { message: "Happy Birthday! 🎉", subtext: "Semoga semua impianmu menjadi kenyataan." },
+        { message: "Barakallah Fii Umrik! 🌟", subtext: "Semoga selalu diberkahi." },
       ];
-
+    
       let currentIndex = 0;
-
+    
       function ubahUcapan() {
         const pesanUtama = document.getElementById("pesanUtama");
         const pesanKecil = document.getElementById("pesanKecil");
-        const backsoundAkhir = document.getElementById("backsoundAkhir");
-        const kartu = document.getElementById("kartuUcapan");
-
+    
         // Perbarui pesan
-        currentIndex = (currentIndex + 1) % ucapan.length;
-        pesanUtama.textContent = ucapan[currentIndex].message;
-        pesanKecil.textContent = ucapan[currentIndex].subtext;
-
-        // Ganti warna latar belakang kartu
-        const randomHue = Math.floor(Math.random() * 360);
-        kartu.style.background = `hsl(${randomHue}, 80%, 90%)`;
-
-        // Atur audio
-        if (currentIndex >= ucapan.length - 2) {
-          backsound.pause();
-          backsoundAkhir.play();
+        currentIndex++;
+        if (currentIndex < ucapan.length) {
+          pesanUtama.textContent = ucapan[currentIndex].message;
+          pesanKecil.textContent = ucapan[currentIndex].subtext;
+    
+          // Hentikan backsound utama dan mainkan backsound akhir
+          if (!backsound.paused) {
+            backsound.volume = 0.5; // Menurunkan volume backsound utama
+          }
+          if (backsoundAkhir.paused) {
+            backsoundAkhir.play();
+            backsoundAkhir.volume = 0.9; // Volume normal untuk backsound akhir
+          }
         } else {
-          backsoundAkhir.pause();
-          backsound.play();
+          // Jika melewati kartu terakhir, kembali ke awal
+          currentIndex = 0;
+          pesanUtama.textContent = ucapan[currentIndex].message;
+          pesanKecil.textContent = ucapan[currentIndex].subtext;
         }
       }
     </script>
+    
 
   </body>
 </html>
