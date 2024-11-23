@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ucapan Ultah 🎉</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(120deg, #f6d365, #fda085);
+        color: #fff;
+      }
+      #countdown-container {
+        text-align: center;
+      }
+      #countdown {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      #countdown-message {
+        font-size: 1.5em;
+      }
+      #main-content {
+        display: none; /* Sembunyikan halaman utama awalnya */
+        text-align: center;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(120deg, #f6d365, #fda085);
+        background-image: url("IMG_20231028_101239.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: #000;
+        padding: 20px;
+      }
+      .card {
+        width: 300px;
+        height: 200px;
+        margin: auto;
+        background: #fff;
+        color: #333;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.3s, background 0.3s;
+      }
+      .card:hover {
+        transform: scale(1.05);
+      }
+      .message {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+      .subtext {
+        font-size: 1em;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Halaman Hitung Mundur -->
+    <div id="countdown-container">
+      <div id="countdown">00:00:00</div>
+      <div id="countdown-message">Menghitung mundur ke hari spesial...</div>
+    </div>
+
+    <!-- Halaman Utama -->
+    <div id="main-content">
+      <h1>Untuk Kiky 🎉</h1>
+      <p>Klik kartu for see ucapan:</p>
+      <div class="card" id="kartuUcapan" onclick="ubahUcapan()">
+        <div class="message" id="pesanUtama">Selamat Ulang Tahun! 🎂</div>
+        <div class="subtext" id="pesanKecil">
+          Happy level up! Resky Widiyanti. S
+        </div>
+      </div>
+    </div>
+
+    <audio id="backsound" src="backs.mp3" loop></audio>
+    <audio id="backsoundAkhir" src="in.mp3"></audio>
+
+    <script>
+      // Target waktu (contoh: 24 November 2024, pukul 00:00)
+      const targetDate = new Date("2024-11-23T20:50:00");
+
+      // Elemen HTML untuk countdown
+      const countdownEl = document.getElementById("countdown");
+      const countdownContainer = document.getElementById("countdown-container");
+      const mainContent = document.getElementById("main-content");
+      const backsound = document.getElementById("backsound");
+
+      // Hitung mundur
+      function updateCountdown() {
+        const now = new Date();
+        const difference = targetDate - now;
+
+        if (difference <= 0) {
+          // Ketika waktu hitung mundur habis
+          countdownContainer.style.display = "none"; // Sembunyikan halaman hitung mundur
+          mainContent.style.display = "block"; // Tampilkan halaman utama
+          backsound.play(); // Putar musik utama
+        } else {
+          // Hitung waktu yang tersisa
+          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+          // Update elemen countdown
+          countdownEl.textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        }
+      }
+
+      // Perbarui setiap detik
+      setInterval(updateCountdown, 1000);
+
+      // Fungsi untuk mengganti ucapan (dari kode sebelumnya)
+      const ucapan = [
+        { message: "Selamat Ulang Tahun! 🎂", subtext: "Semoga harimu menyenangkan!" },
+        { message: "Happy Birthday! 🎉", subtext: "Semoga semua impianmu menjadi kenyataan." },
+        // Tambahkan ucapan lainnya...
+      ];
+      let currentIndex = 0;
+
+      function ubahUcapan() {
+        const pesanUtama = document.getElementById("pesanUtama");
+        const pesanKecil = document.getElementById("pesanKecil");
+
+        currentIndex = (currentIndex + 1) % ucapan.length;
+
+        pesanUtama.textContent = ucapan[currentIndex].message;
+        pesanKecil.textContent = ucapan[currentIndex].subtext;
+      }
+    </script>
+  </body>
+</html>
